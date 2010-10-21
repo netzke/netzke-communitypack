@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ['p.spieker@duenos.de']
   s.homepage    = "http://github.com/skozlov/netzke-communitypack"
   s.summary     = "Components for Netzke created by the community"
-  s.description = "The community pack for netzke contains components for Netzke which are provided by the company"
+  s.description = "The community pack for netzke contains components for Netzke which are provided by the community"
 
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project         = "netzke-communitypack"
