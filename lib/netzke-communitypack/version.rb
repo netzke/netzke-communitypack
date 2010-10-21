@@ -6,5 +6,6 @@ module Netzke
     BUILD = 'beta'
 
     STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
+	VERSION = STRING
   end
 end
