@@ -1,0 +1,1 @@
+Requires the "rails3" branch of netzke-core and netzke-basepack.
