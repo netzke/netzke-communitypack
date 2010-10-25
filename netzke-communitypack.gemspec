@@ -21,4 +21,6 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.rdoc_options = ["--charset=UTF-8"]
+
+  s.add_dependency 'netzke-basepack', '>= 0.6.0'
 end
