@@ -2,10 +2,9 @@ module Netzke
   module Communitypack
     MAJOR = 0
     MINOR = 1
-    PATCH = 0
-    BUILD = 'beta'
+    PATCH = 2
 
-    STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
+    STRING = [MAJOR, MINOR, PATCH].compact.join('.')
 	VERSION = STRING
   end
 end
