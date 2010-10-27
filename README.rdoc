@@ -1,1 +1,5 @@
-Requires the "rails3" branch of netzke-core and netzke-basepack.
+= Netzke components submitted by the community
+
+Includes the following components:
+
+* LiveSearchGridPanel - GridPanel extension with a configurable live-search textfield
