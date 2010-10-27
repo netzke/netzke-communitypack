@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RailsApp</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+  <!-- this Google Maps API key works only for localhost--> 
+  <script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=ABQIAAAA2CKu_qQN-JHtlfQ5L7BLlRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQl3I3p2yrGARYK4f4bkjp9NHpm5w" type="text/javascript"></script>
+  <%= netzke_init %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>
