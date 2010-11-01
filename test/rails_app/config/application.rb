@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-$:.unshift File.expand_path('../../../../app', __FILE__)
+$:.unshift File.expand_path('../../../../lib', __FILE__)
 require 'netzke-basepack'
 
 module RailsApp
@@ -16,7 +16,7 @@ module RailsApp
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/../../app/components)
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/../../lib)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
