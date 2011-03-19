@@ -1,5 +1,5 @@
 # External dependencies
-require 'netzke-base'
+require 'netzke-core'
 require 'active_support/dependencies'
 
 # Make components auto-loadable
