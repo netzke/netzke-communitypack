@@ -11,7 +11,6 @@ class Netzke::Communitypack::LiveSearchGridPanel < ::Netzke::Basepack::GridPanel
     super.merge({
       :tbar => ['->', {
         :xtype => 'textfield',
-        :id => 'live_search_field',
         :enable_key_events => true,
         :ref => '../live_search_field',
         :empty_text => 'Search'
@@ -31,7 +30,7 @@ class Netzke::Communitypack::LiveSearchGridPanel < ::Netzke::Basepack::GridPanel
 
   js_method :on_live_search, <<-JS
     function() {
-      var search_text = this.getTopToolbar().get('live_search_field').getValue();
+      var search_text = this.live_search_field.getValue();
       if (search_text == this.liveSearchBuffer) return;
       this.liveSearchBuffer = search_text;
       this.getStore().setBaseParam('live_search', search_text);
@@ -46,4 +45,5 @@ class Netzke::Communitypack::LiveSearchGridPanel < ::Netzke::Basepack::GridPanel
       super
     end
   end
+
 end
