@@ -1,4 +1,6 @@
-pkg/*
-*.gem
-.bundle
-/test/rails_app/public/extjs
+.bundle/
+log/*.log
+pkg/
+test/dummy/db/*.sqlite3
+test/dummy/log/*.log
+test/dummy/tmp/

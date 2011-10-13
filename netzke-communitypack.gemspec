@@ -1,26 +1,22 @@
-# -*- encoding: utf-8 -*-
-require File.expand_path("../lib/netzke-communitypack/version", __FILE__)
+$:.push File.expand_path("../lib", __FILE__)
 
+# Maintain your gem's version:
+require "netzke-communitypack/version"
+
+# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "netzke-communitypack"
-  s.version     = Netzke::Communitypack::VERSION
-  s.platform    = Gem::Platform::RUBY
-  s.authors     = ['Paul Spieker']
-  s.email       = ['p.spieker@duenos.de']
-  s.homepage    = "http://github.com/skozlov/netzke-communitypack"
-  s.summary     = "Components for Netzke created by the community"
-  s.description = "The community pack for netzke contains components for Netzke which are provided by the community"
+  s.version     = NetzkeCommunitypack::VERSION
+  s.authors     = ["NomadCoder"]
+  s.email       = ["nmcoder@gmail.com"]
+  s.homepage    = "http://blog.writelesscode.com"
+  s.summary     = "Community-created Netzke components"
+  s.description = "Components that have been added by different people, but haven't yet found their way to Netzke Basepack - a kind of staging place for components."
 
-  s.required_rubygems_version = ">= 1.3.6"
-  s.rubyforge_project         = "netzke-communitypack"
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.test_files = Dir["test/**/*"]
 
-  s.add_development_dependency "bundler", ">= 1.0.0"
+  s.add_dependency "rails", ">= 3.0.0"
 
-  s.files        = `git ls-files`.split("\n")
-  s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
-  s.require_paths = ['lib']
-
-  s.rdoc_options = ["--charset=UTF-8"]
-
-  s.add_dependency 'netzke-basepack', '>= 0.6.0'
+  s.add_development_dependency "sqlite3"
 end

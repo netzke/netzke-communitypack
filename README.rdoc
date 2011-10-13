@@ -1,6 +1,3 @@
-= Netzke components submitted by the community
+= NetzkeCommunitypack
 
-Includes the following components:
-
-* LiveSearchGridPanel - GridPanel extension with a configurable live-search textfield
-* GoogleMapPanel - Panel showing a Google map
+This project rocks and uses MIT-LICENSE.
