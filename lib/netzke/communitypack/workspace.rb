@@ -52,12 +52,14 @@ module Netzke
           cmp_instance = cmp_class.new(cmp_config, self)
           new_tab_short_config = cmp_config.merge(:title => cmp_instance.js_config[:title] || cmp_instance.class.js_properties[:title]) # here we set the title
 
-          if cmp_index >= stored_tabs.last[:name].sub("cmp", "").to_i
+          if cmp_index > stored_tabs.last[:name].sub("cmp", "").to_i
             # add new tab to persistent storage
+            ::Rails.logger.debug "!!! cmp_index: #{cmp_index.inspect}\n"
             current_tabs << new_tab_short_config
           else
             # replace existing tab in the storage
-            current_tabs[cmp_index] = new_tab_short_config
+            ::Rails.logger.debug "!!! cmp_name: #{cmp_name.inspect}\n"
+            current_tabs[current_tabs.index(current_tabs.detect{ |tab| tab[:name] == cmp_name })] = new_tab_short_config
           end
 
           component_session[:items] = current_tabs
