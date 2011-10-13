@@ -33,7 +33,7 @@ module Netzke
 
       # Overriding this to allow for dynamically declared components
       def components
-        stored_tabs.inject({}){ |r,tab| r.merge(tab[:name].to_sym => tab.reverse_merge(:prevent_header => true, :lazy_loading => true)) }
+        stored_tabs.inject({}){ |r,tab| r.merge(tab[:name].to_sym => tab.reverse_merge(:prevent_header => true, :lazy_loading => true, :border => false)) }
       end
 
       # Overriding the deliver_component endpoint, to dynamically add tabs and replace components in existing tabs
