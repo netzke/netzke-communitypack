@@ -54,11 +54,9 @@ module Netzke
 
           if cmp_index > stored_tabs.last[:name].sub("cmp", "").to_i
             # add new tab to persistent storage
-            ::Rails.logger.debug "!!! cmp_index: #{cmp_index.inspect}\n"
             current_tabs << new_tab_short_config
           else
             # replace existing tab in the storage
-            ::Rails.logger.debug "!!! cmp_name: #{cmp_name.inspect}\n"
             current_tabs[current_tabs.index(current_tabs.detect{ |tab| tab[:name] == cmp_name })] = new_tab_short_config
           end
 
