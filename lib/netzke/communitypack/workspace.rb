@@ -16,7 +16,7 @@ module Netzke
 
       def default_config
         super.tap do |c|
-          c[:items] = stored_tabs.each_with_index.map do |tab,i|
+          c[:items] = [dashboard_config] + stored_tabs.each_with_index.map do |tab,i|
             {
               :layout => 'fit',
               :title => tab[:title],
@@ -30,10 +30,13 @@ module Netzke
         end
       end
 
+      def dashboard_config
+        {:title => "Dashboard", :class_name => "Netzke::Basepack::Panel"}.merge!(@passed_config[:dashboard_config] || {}).merge(:name => 'cmp0', :closable => false, :lazy_loading => false, :netzke_component_id => "cmp0")
+      end
 
       # Overriding this to allow for dynamically declared components
       def components
-        stored_tabs.inject({}){ |r,tab| r.merge(tab[:name].to_sym => tab.reverse_merge(:prevent_header => true, :lazy_loading => true, :border => false)) }
+        stored_tabs.inject({}){ |r,tab| r.merge(tab[:name].to_sym => tab.reverse_merge(:prevent_header => true, :lazy_loading => true, :border => false)) }.merge(:cmp0 => dashboard_config)
       end
 
       # Overriding the deliver_component endpoint, to dynamically add tabs and replace components in existing tabs
@@ -52,7 +55,7 @@ module Netzke
           cmp_instance = cmp_class.new(cmp_config, self)
           new_tab_short_config = cmp_config.merge(:title => cmp_instance.js_config[:title] || cmp_instance.class.js_properties[:title]) # here we set the title
 
-          if cmp_index > stored_tabs.last[:name].sub("cmp", "").to_i
+          if stored_tabs.empty? || cmp_index > stored_tabs.last[:name].sub("cmp", "").to_i
             # add new tab to persistent storage
             current_tabs << new_tab_short_config
           else
@@ -82,7 +85,7 @@ module Netzke
 
         # We store these in component_session atm. May as well be in persistent storage, depending on the requirements
         def stored_tabs
-          @stored_tabs ||= component_session[:items].nil? ? [{:name => 'cmp0', :title => "Dashboard", :prevent_header => true, :closable => false, :lazy_loading => false, :class_name => "Netzke::Basepack::Panel"}] : component_session[:items]
+          @stored_tabs ||= component_session[:items] || []
         end
 
     end
