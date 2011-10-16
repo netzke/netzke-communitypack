@@ -12,6 +12,13 @@ module Netzke
     class OneToManyExplorer < Netzke::Basepack::BorderLayoutPanel
       js_mixin
 
+      delegates_to_dsl :container_model, :collection_model, :container_config, :collection_config, :association
+
+      js_properties(
+        :prevent_header => true,
+        :border => true
+      )
+
       def configuration
         super.tap do |c|
 
