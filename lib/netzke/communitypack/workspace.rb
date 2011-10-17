@@ -16,7 +16,7 @@ module Netzke
 
       def default_config
         super.tap do |c|
-          c[:items] = [dashboard_config] + stored_tabs.each_with_index.map do |tab,i|
+          c[:items] = ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
             {
               :layout => 'fit',
               :title => tab[:title],
@@ -25,13 +25,14 @@ module Netzke
               :items => !components[tab[:name].to_sym][:lazy_loading] && [tab[:name].to_sym.component]
             }
           end
-
-          # c[:bbar] = [:remove_all.action]
         end
       end
 
       def dashboard_config
-        {:title => "Dashboard", :class_name => "Netzke::Basepack::Panel"}.merge!(@passed_config[:dashboard_config] || {}).merge(:name => 'cmp0', :closable => false, :lazy_loading => false, :netzke_component_id => "cmp0")
+        {
+          :title => "Dashboard",
+          :class_name => "Netzke::Basepack::Panel"
+        }.merge!(@passed_config[:dashboard_config] || {}).merge(:name => 'cmp0', :lazy_loading => false)
       end
 
       # Overriding this to allow for dynamically declared components
@@ -72,7 +73,7 @@ module Netzke
 
       # Clean the session on request. More clean-up may be needed later, as we start using persistent configuration.
       endpoint :server_remove_all do |params|
-        component_session[:items] = nil
+        component_session[:items] = []
       end
 
       # Removes a closed tab's component from the storage.
