@@ -34,15 +34,17 @@ module Netzke
 
           # set default width/height for regions
           c[:container_config][:width] ||= 300 if [:west, :east].include?(c[:container_config][:region].to_sym)
-          c[:container_config][:height] ||= 150 if [:north, :south].include?(c[:container_config][:region].to_sym)
+          c[:container_config][:height] ||= 200 if [:north, :south].include?(c[:container_config][:region].to_sym)
+
+          # figure out collection_class from config or from the passed component
+          container_class = c[:container_config][:model].try(:constantize) || c[:container_config][:class_name].constantize.new.data_class
+          collection_class = c[:collection_config][:model].try(:constantize) || c[:collection_config][:class_name].constantize.new.data_class
 
           # use the shortcuts for models
-          c[:container_config][:model] ||= c[:container_model]
-          c[:collection_config][:model] ||= c[:collection_model]
+          c[:container_config][:model] ||= c[:container_model] || container_class.name
+          c[:collection_config][:model] ||= c[:collection_model] || collection_class.name
 
           # we need to get the association reflection in order to properly set the collection grid scope
-          container_class = c[:container_config][:model].constantize
-          collection_class = c[:collection_config][:model].constantize
           c[:association] ||= c[:container_config][:model].underscore.to_sym # the belongs_to association, e.g. "user"
 
           association = collection_class.reflect_on_association(c[:association])
