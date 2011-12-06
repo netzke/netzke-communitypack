@@ -6,6 +6,12 @@ module Netzke
     #   workspace.loadChild("UserGrid", {newTab: true})
     #
     # - will load a UserGrid component from the server in a new tab.
+    # 
+    # ## Configuration
+    # 
+    # Accepts the following options:
+    # 
+    # * always_reload_first_tab (default false) - reload the first tab each time it gets activated
     class Workspace < Netzke::Base
       js_base_class "Ext.tab.Panel"
       js_property :prevent_header, true
