@@ -1,4 +1,8 @@
 Dummy::Application.routes.draw do
+  netzke
+
+  match 'components/:component' => 'components#index', :as => "components"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
