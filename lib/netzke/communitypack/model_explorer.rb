@@ -15,30 +15,29 @@ module Netzke
         :border => true
       )
 
-      def configuration
-        super.tap do |c|
+      def configure
+        super
 
-          # merge default container and collection config with the one provided by the user
-          c[:grid_config] = {
-            :region => :west,
-            :class_name => "Netzke::Basepack::GridPanel",
-            :model => c[:model],
-            :item_id => 'grid'
-          }.merge(c[:grid_config] || {})
+        # merge default container and collection config with the one provided by the user
+        config.grid_config = {
+          :region => :west,
+          :class_name => "Netzke::Basepack::GridPanel",
+          :model => config.model,
+          :item_id => 'grid'
+        }.merge(config.grid_config || {})
 
-          c[:form_config] = {
-            :class_name => "Netzke::Basepack::FormPanel",
-            :model => c[:model],
-            :region => :center,
-            :item_id => 'form'
-          }.merge(c[:form_config] || {})
+        config.form_config = {
+          :class_name => "Netzke::Basepack::FormPanel",
+          :model => config.model,
+          :region => :center,
+          :item_id => 'form'
+        }.merge(config.form_config || {})
 
-          # set default width/height for regions
-          c[:grid_config][:width] ||= 300 if [:west, :east].include?(c[:grid_config][:region].to_sym)
-          c[:grid_config][:height] ||= 150 if [:north, :south].include?(c[:grid_config][:region].to_sym)
+        # set default width/height for regions
+        config.grid_config[:width] ||= 300 if [:west, :east].include?(config.grid_config[:region].to_sym)
+        config.grid_config[:height] ||= 150 if [:north, :south].include?(config.grid_config[:region].to_sym)
 
-          c[:items] = [c[:grid_config], c[:form_config]]
-        end
+        config.items = [config.grid_config, config.form_config]
       end
 
       endpoint :select_record do |params|

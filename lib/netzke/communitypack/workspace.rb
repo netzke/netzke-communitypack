@@ -20,17 +20,16 @@ module Netzke
 
       action :remove_all
 
-      def default_config
-        super.tap do |c|
-          c[:items] = ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
-            {
-              :layout => 'fit',
-              :title => tab[:title],
-              :closable => i > 0, # all closable except first
-              :netzke_component_id => tab[:name],
-              :items => !components[tab[:name].to_sym][:lazy_loading] && [tab[:name].to_sym.component]
-            }
-          end
+      def configure
+        super
+        config.items = ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
+          {
+            :layout => 'fit',
+            :title => tab[:title],
+            :closable => i > 0, # all closable except first
+            :netzke_component_id => tab[:name],
+            :items => !components[tab[:name].to_sym][:lazy_loading] && [tab[:name].to_sym.component]
+          }
         end
       end
 
