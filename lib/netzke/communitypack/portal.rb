@@ -94,7 +94,7 @@ module Netzke
           component_session[:components].merge!(cmp_name.to_sym => portlet_config(params))
 
           # add it also into the layout
-          component_session[:layout].first[:items] << cmp_name.to_sym.component
+          component_session[:layout].first[:items] << cmp_name.to_sym
         end
 
         super

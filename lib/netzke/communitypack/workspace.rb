@@ -20,15 +20,14 @@ module Netzke
 
       action :remove_all
 
-      def configure
-        super
-        config.items = ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
+      def items
+        ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
           {
             :layout => 'fit',
             :title => tab[:title],
             :closable => i > 0, # all closable except first
             :netzke_component_id => tab[:name],
-            :items => !components[tab[:name].to_sym][:lazy_loading] && [tab[:name].to_sym.component]
+            :items => !components[tab[:name].to_sym][:lazy_loading] && [tab[:name].to_sym]
           }
         end
       end
@@ -36,7 +35,7 @@ module Netzke
       def dashboard_config
         {
           :title => "Dashboard",
-          :class_name => "Netzke::Basepack::Panel"
+          klass: Netzke::Basepack::Panel
         }.merge!(@passed_config[:dashboard_config] || {}).merge(:name => 'cmp0', :lazy_loading => false)
       end
 
