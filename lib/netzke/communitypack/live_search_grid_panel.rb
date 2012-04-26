@@ -12,7 +12,7 @@ class Netzke::Communitypack::LiveSearchGridPanel < ::Netzke::Basepack::GridPanel
       :tbar => ['->', {
         :xtype => 'textfield',
         :enable_key_events => true,
-        :ref => '../live_search_field',
+        :name => 'live_search_field',
         :empty_text => 'Search'
       }]
     })
@@ -23,8 +23,12 @@ class Netzke::Communitypack::LiveSearchGridPanel < ::Netzke::Basepack::GridPanel
       #{js_full_class_name}.superclass.initComponent.call(this);
 
       this.liveSearchBuffer = '';
-      this.live_search_field.on('keydown', function() { this.onLiveSearch(); }, this, { buffer: 500 });
-      this.live_search_field.on('blur', function() { this.onLiveSearch(); }, this, { buffer: 500 });
+      
+      live_search_field = this.query('textfield[name="live_search_field"]')[0];
+    
+      // Add event listeners
+      live_search_field.on('keydown', function() { this.onLiveSearch(); }, this, { buffer: 500 });
+      live_search_field.on('blur', function() { this.onLiveSearch(); }, this, { buffer: 500 });
     }
   JS
 
@@ -33,8 +37,10 @@ class Netzke::Communitypack::LiveSearchGridPanel < ::Netzke::Basepack::GridPanel
       var search_text = this.live_search_field.getValue();
       if (search_text == this.liveSearchBuffer) return;
       this.liveSearchBuffer = search_text;
-      this.getStore().setBaseParam('live_search', search_text);
-      this.getStore().load();
+      Ext.apply(this.getStore().proxy.extraParams, {
+        live_search : search_text
+      });
+      this.getStore().loadPage(1);
     }
   JS
 
