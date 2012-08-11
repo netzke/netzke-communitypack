@@ -6,22 +6,23 @@ module Netzke
     #   workspace.loadChild("UserGrid", {newTab: true})
     #
     # - will load a UserGrid component from the server in a new tab.
-    # 
+    #
     # ## Configuration
-    # 
+    #
     # Accepts the following options:
-    # 
+    #
     # * always_reload_first_tab (default false) - reload the first tab each time it gets activated
     class Workspace < Netzke::Base
-      js_base_class "Ext.tab.Panel"
-      js_property :prevent_header, true
-
-      js_mixin
+      js_configure do |c|
+        c.extend = "Ext.tab.Panel"
+        c.prevent_header = true
+        c.mixin
+      end
 
       action :remove_all
 
-      def items
-        ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
+      def configure(c)
+        c.items = ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
           {
             :layout => 'fit',
             :title => tab[:title],
@@ -30,6 +31,8 @@ module Netzke
             :items => !components[tab[:name].to_sym][:lazy_loading] && [tab[:name].to_sym]
           }
         end
+
+        super
       end
 
       def dashboard_config
@@ -45,7 +48,7 @@ module Netzke
       end
 
       # Overriding the deliver_component endpoint, to dynamically add tabs and replace components in existing tabs
-      def deliver_component_endpoint(params)
+      endpoint :deliver_component do |params, this|
         cmp_name = params[:name]
         cmp_index = cmp_name.sub("cmp", "").to_i
 
@@ -53,10 +56,10 @@ module Netzke
           current_tabs = stored_tabs
 
           # we need to instantiate the newly added child to get access to its title
-          cmp_class = constantize_class_name(params[:component])
+          cmp_class = params[:component].constantize
           raise RuntimeError, "Could not find class #{params[:component]}" if cmp_class.nil?
 
-          cmp_config = {:name => params[:name], :class_name => cmp_class.name}.merge(params[:config] || {}).symbolize_keys
+          cmp_config = {:name => params[:name], :klass => cmp_class}.merge(params[:config] || {}).symbolize_keys
           cmp_instance = cmp_class.new(cmp_config, self)
           new_tab_short_config = cmp_config.merge(:title => cmp_instance.js_config[:title] || cmp_instance.class.js_properties[:title]) # here we set the title
 
@@ -72,7 +75,7 @@ module Netzke
           @stored_tabs = nil # reset cache
         end
 
-        super(params)
+        super(params, this)
       end
 
       # Clean the session on request. More clean-up may be needed later, as we start using persistent configuration.
