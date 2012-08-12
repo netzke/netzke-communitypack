@@ -7,7 +7,7 @@ require "netzke-communitypack/version"
 Gem::Specification.new do |s|
   s.name        = "netzke-communitypack"
   s.version     = NetzkeCommunitypack::VERSION
-  s.authors     = ["NomadCoder"]
+  s.authors     = ["Denis Gorin"]
   s.email       = ["nmcoder@gmail.com"]
   s.homepage    = "http://writelesscode.com"
   s.summary     = "Community-created Netzke components"
