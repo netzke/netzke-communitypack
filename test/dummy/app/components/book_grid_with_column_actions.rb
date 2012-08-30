@@ -1,4 +1,3 @@
-# Implements a column action :delete_row
 class BookGridWithColumnActions < Netzke::Basepack::GridPanel
   include Netzke::Communitypack::ActionColumn
 
@@ -10,7 +9,7 @@ class BookGridWithColumnActions < Netzke::Basepack::GridPanel
 
   column :basic_actions do |c|
     c.type = :action
-    c.actions = [{name: :delete_row, tooltip: "Delete row", icon: "#{Netzke::Core.ext_uri}/examples/shared/icons/fam/delete.gif"}]
+    c.actions = [{name: :delete_row, tooltip: "Delete row", icon: :delete}]
   end
 
   # Just for illustation (have no handler)

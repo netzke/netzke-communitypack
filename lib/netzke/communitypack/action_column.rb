@@ -18,8 +18,10 @@ module Netzke
               a = {name: a} if a.is_a?(Symbol)
               a.tap do |a|
                 a[:tooltip] ||= a[:name].to_s.humanize
-                a[:icon] ||= "/extjs/examples/shared/icons/fam/#{a[:name]}.png"
+                a[:icon] ||= a[:name].to_sym
                 a[:handler] ||= "on_#{a[:name]}"
+
+                a[:icon] = "#{Netzke::Core.icons_uri}/#{a[:icon]}.png" if a[:icon].is_a?(Symbol)
               end
             end.to_nifty_json
           end
