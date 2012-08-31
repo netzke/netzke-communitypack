@@ -7,8 +7,9 @@
 # * +live_search_scope+ - The scope name for filtering the results by the live search (default: :live_search)
 #
 class Netzke::Communitypack::LiveSearchGridPanel < ::Netzke::Basepack::GridPanel
-  def configuration
-    super.merge({
+  def configure
+    super
+    config.merge!({
       :tbar => ['->', {
         :xtype => 'textfield',
         :enable_key_events => true,

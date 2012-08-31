@@ -11,9 +11,9 @@ class Netzke::Communitypack::GoogleMapPanel < ::Netzke::Base
 
   js_include "#{File.dirname(__FILE__)}/google_map_panel/javascript/GMapPanel.js"
 
-  # default configuration
-  def configuration
-    super.merge({
+  def configure
+    super
+    config.merge!({
       :zoom_level => 14,
       :gmap_type => 'map',
       :layout => :fit,
