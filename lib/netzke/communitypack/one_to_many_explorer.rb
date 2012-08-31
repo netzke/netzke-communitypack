@@ -15,6 +15,8 @@ module Netzke
     #       super c
     #     end
     class OneToManyExplorer < Netzke::Base
+      include Netzke::Basepack::ItemsPersistence
+
       js_configure do |c|
         c.mixin
         c.prevent_header = true
@@ -37,6 +39,7 @@ module Netzke
         c.title ||= "Container"
         c.region ||= :west
         c.width ||= 300
+        c.merge!(config.container_config || {})
       end
 
       component :collection do |c|
@@ -45,9 +48,13 @@ module Netzke
         c.region ||= :center
         c.load_inline_data = false
 
+        collection_config = config.collection_config.try(:dup) || {} # dupping because config hash is frozen
+
         # Make sure the data in the collection grid is bound to the selected container record
-        c.scope = (c.scope || {}).merge(config.foreign_key => component_session[:container_id])
-        c.strong_default_attrs = (c.strong_default_attrs || {}).merge(config.foreign_key => component_session[:container_id])
+        c.scope = (c.scope || {}).merge(config.foreign_key => component_session[:container_id]).merge(collection_config.delete(:scope) || {})
+        c.strong_default_attrs = (c.strong_default_attrs || {}).merge(config.foreign_key => component_session[:container_id]).merge(collection_config.delete(:strong_default_attrs) || {})
+
+        c.merge!(collection_config)
       end
     end
   end
