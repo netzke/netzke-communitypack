@@ -2,7 +2,7 @@
 sh -e /etc/init.d/xvfb start
 
 # fetch extjs
-#wget http://cdn.sencha.io/ext-4.1.1-gpl.zip
+wget http://cdn.sencha.io/ext-4.1.1-gpl.zip
 unzip -q -d test/communitypack_test_app/public/ -n ext-4.1.1-gpl.zip
 mv test/communitypack_test_app/public/extjs-4.1.1 test/communitypack_test_app/public/extjs
 
