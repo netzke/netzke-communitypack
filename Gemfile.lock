@@ -1,21 +1,25 @@
+GIT
+  remote: git://github.com/nomadcoder/netzke-basepack.git
+  revision: e5414c46e2dfc8f6de250feeae4f60b780545732
+  branch: 0-8
+  specs:
+    netzke-basepack (0.8.0)
+      netzke-core (~> 0.8.0)
+
+GIT
+  remote: git://github.com/nomadcoder/netzke-core.git
+  revision: 8884240194877572d8856a513fa8fc57cabfb6ff
+  branch: 0-8
+  specs:
+    netzke-core (0.8.0)
+      activesupport (>= 3.0.0)
+
 PATH
   remote: .
   specs:
     netzke-communitypack (0.8.0)
       netzke-basepack (~> 0.8.0)
       rails (>= 3.0.0)
-
-PATH
-  remote: ~/code/netzke/netzke-basepack
-  specs:
-    netzke-basepack (0.8.0)
-      netzke-core (~> 0.8.0)
-
-PATH
-  remote: ~/code/netzke/netzke-core
-  specs:
-    netzke-core (0.8.0)
-      activesupport (>= 3.0.0)
 
 GEM
   remote: http://rubygems.org/

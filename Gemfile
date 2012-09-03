@@ -13,5 +13,6 @@ gemspec
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-gem 'netzke-core', :path => "~/code/netzke/netzke-core"
-gem 'netzke-basepack', :path => "~/code/netzke/netzke-basepack"
+# Get the latest sources from github
+gem 'netzke-core',     :github => 'nomadcoder/netzke-core',     :branch => '0-8'
+gem 'netzke-basepack', :github => 'nomadcoder/netzke-basepack', :branch => '0-8'
