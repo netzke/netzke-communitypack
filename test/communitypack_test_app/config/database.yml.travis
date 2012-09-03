@@ -9,4 +9,4 @@ test: &test
   pool: 5
   username:
   # DM
-  uri: mysql://127.0.0.1/nbt_test?user=&encoding=UTF-8
+  uri: mysql://127.0.0.1/nct_test?user=&encoding=UTF-8
