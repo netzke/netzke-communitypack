@@ -10,7 +10,7 @@ describe BookGridWithLiveSearch, :type => :request, :js => true do
     visit '/components/BookGridWithLiveSearch'
     grid_count.should == 2
     fill_in 'live_search_field', :with => 'Moby'
-    sleep(0.5) # wait until search gets triggered
+    sleep(0.6) # wait until search gets triggered
     grid_count.should == 1
   end
 
@@ -18,7 +18,7 @@ describe BookGridWithLiveSearch, :type => :request, :js => true do
     visit '/components/BookGridWithLiveSearch'
     grid_count.should == 2
     fill_in 'live_search_field', :with => 'Moby'
-    sleep(0.5) # wait until search gets triggered
+    sleep(0.6) # wait until search gets triggered
     grid_cell_value(0,:title).should == "Moby Dick"
   end
 
@@ -26,7 +26,7 @@ describe BookGridWithLiveSearch, :type => :request, :js => true do
   it "search for 'not a book title' shouldn't list anything" do
     visit '/components/BookGridWithLiveSearch'
     fill_in 'live_search_field', :with => 'not a book title'
-    sleep(0.5) # wait until search gets triggered
+    sleep(0.6) # wait until search gets triggered
     grid_count.should == 0
   end
 end
