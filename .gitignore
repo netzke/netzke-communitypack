@@ -1,8 +1,25 @@
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/**/*
+config/database.yml
+.powrc
+
 .bundle/
 log/*.log
 pkg/
-test/dummy/db/*.sqlite3
-test/dummy/log/*.log
-test/dummy/tmp/
-test/dummy/public/extjs
-test/dummy/public/images/icons
+
+# Ignore bundler config
+test/communitypack_test_acpp/.bundle
+
+# Ignore the default SQLite database.
+test/communitypack_test_app/db/*.sqlite3
+test/communitypack_test_app/config/database.yml
+
+# Ignore all logfiles and tempfiles.
+test/communitypack_test_app/log/*.log
+test/communitypack_test_app/log
+test/communitypack_test_app/tmp
+
+# Ignore Ext JS
+test/communitypack_test_app/public/extjs
