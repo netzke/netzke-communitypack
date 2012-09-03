@@ -10,10 +10,14 @@ mv test/communitypack_test_app/public/extjs-4.1.1 test/communitypack_test_app/pu
 cp test/communitypack_test_app/config/database.yml.travis test/communitypack_test_app/config/database.yml
 
 # create mysql database
+echo 'Create database'
 mysql -e 'create database nct_test;'
 
-
+echo 'Install communitypack_test_app bundle'
 cd test/communitypack_test_app
+
+ls
+
 bundle install
 
 bundle show
