@@ -18,7 +18,5 @@ cd test/communitypack_test_app;
 
 bundle install
 
-bundle show
-
 bundle exec rake db:migrate RAILS_ENV=test
 cd ../..
