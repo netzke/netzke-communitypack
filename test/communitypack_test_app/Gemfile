@@ -4,7 +4,7 @@ RAILS_VERSION = '3.2.8'
 DM_VERSION    = '1.2.0'
 
 gem 'rails',                RAILS_VERSION
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.11'
 
 case (ENV['ORM'] || '').downcase
 when 'dm'
