@@ -14,9 +14,7 @@ echo 'Create database'
 mysql -e 'create database nct_test;'
 
 echo 'Install communitypack_test_app bundle'
-cd test/communitypack_test_app
-
-ls
+cd test/communitypack_test_app;
 
 bundle install
 
