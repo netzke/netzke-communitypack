@@ -24,13 +24,6 @@ GIT
     netzke-core (0.8.0)
       activesupport (>= 3.0.0)
 
-PATH
-  remote: /home/scho/coding/projects/netzke/netzke-communitypack
-  specs:
-    netzke-communitypack (0.8.0)
-      netzke-basepack (~> 0.8.0)
-      rails (>= 3.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -192,9 +185,8 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   launchy
-  mysql2 (~> 0.3.11)
+  mysql2
   netzke-basepack!
-  netzke-communitypack!
   netzke-core!
   pickle!
   pry

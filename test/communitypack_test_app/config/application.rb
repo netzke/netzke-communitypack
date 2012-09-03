@@ -9,6 +9,9 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+$:.unshift File.expand_path('../../../../lib', __FILE__)
+require 'netzke-communitypack'
+
 module CommunitypackTestApp
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
