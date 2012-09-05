@@ -5,7 +5,7 @@ module Extjs
 
   # Returns the number of records in the datagrid's store
   #
-  # @return [Fixnum] 
+  # @return [Fixnum]
   def grid_count
     wait_for_ajax do
       page.driver.browser.execute_script(<<-JS)
@@ -39,4 +39,10 @@ module Extjs
     yield
   end
 
+  # Clicks the first found action icon with provided tooltip
+  #
+  # @param action_name
+  def click_action_icon(action_name)
+    find("img[data-qtip='#{action_name}']").click
+  end
 end
