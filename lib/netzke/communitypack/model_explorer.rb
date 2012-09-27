@@ -6,62 +6,62 @@ module Netzke
     # * :model - name of the model, e.g. "User"
     # * :grid_config (optional) - a config hash passed to the grid
     # * :form_config (optional) - a config hash passed to the form
-    class ModelExplorer < Netzke::Basepack::BorderLayoutPanel
+    class ModelExplorer < Netzke::Base
+      include Netzke::Basepack::ItemsPersistence
 
-      delegates_to_dsl :model, :grid_config, :form_config
+      js_configure do |c|
+        c.prevent_header = true
+        c.layout = :border
+        c.init_component = <<-JS
+          function(){
+            // calling superclass's initComponent
+            this.callParent();
 
-      js_properties(
-        :prevent_header => true,
-        :border => true
-      )
+            this.grid = this.getComponent('grid');
+            this.form = this.getComponent('form');
 
-      def configure
-        super
-
-        # merge default container and collection config with the one provided by the user
-        config.grid_config = {
-          :region => :west,
-          :class_name => "Netzke::Basepack::GridPanel",
-          :model => config.model,
-          :item_id => 'grid'
-        }.merge(config.grid_config || {})
-
-        config.form_config = {
-          :class_name => "Netzke::Basepack::FormPanel",
-          :model => config.model,
-          :region => :center,
-          :item_id => 'form'
-        }.merge(config.form_config || {})
-
-        # set default width/height for regions
-        config.grid_config[:width] ||= 300 if [:west, :east].include?(config.grid_config[:region].to_sym)
-        config.grid_config[:height] ||= 150 if [:north, :south].include?(config.grid_config[:region].to_sym)
-
-        config.items = [config.grid_config, config.form_config]
+            // setting the 'rowclick' event
+            this.grid.getView().on('itemclick', function(view, record){
+              this.selectRecord({id: record.getId()});
+              this.form.netzkeLoad({id: record.getId()});
+            }, this);
+          }
+        JS
       end
 
-      endpoint :select_record do |params|
+      def self.server_side_config_options
+        [*super, :form_config, :grid_config]
+      end
+
+      component :grid do |c|
+        passed_config = config.grid_config || {}
+        passed_config[:region] ||= :west
+        passed_config[:width] ||= 300 if [:west, :east].include?(passed_config[:region])
+        passed_config[:width] ||= 150 if [:north, :south].include?(passed_config[:region])
+
+        c.klass = Netzke::Basepack::GridPanel
+        c.split = true
+        c.model = config.model
+
+        c.merge!(passed_config)
+      end
+
+      component :form do |c|
+        c.klass = Netzke::Basepack::FormPanel
+        c.model = config.model
+        c.region = :center
+        c.merge!(config.form_config || {})
+      end
+
+      def configure(c)
+        super
+        c.items = [:grid, :form]
+      end
+
+      endpoint :select_record do |params, this|
         # store selected container record id in the session for this component's instance
         component_session[:selected_record_id] = params[:id]
-
-        # {:form => {:set_title => "Blah"}}
       end
-
-      js_method :init_component, <<-JS
-        function(){
-          // calling superclass's initComponent
-          this.callParent();
-
-          this.grid = this.getComponent('grid');
-          this.form = this.getComponent('form');
-
-          // setting the 'rowclick' event
-          this.grid.getView().on('itemclick', function(view, record){
-            this.selectRecord({id: record.getId()});
-            this.form.netzkeLoad({id: record.getId()});
-          }, this);
-        }
-      JS
     end
   end
 end
