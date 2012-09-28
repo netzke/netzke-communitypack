@@ -54,8 +54,8 @@ module Netzke
       end
 
       def configure(c)
-        super
         c.items = [:grid, :form]
+        super
       end
 
       endpoint :select_record do |params, this|

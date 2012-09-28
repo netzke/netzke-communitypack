@@ -24,9 +24,13 @@ module Netzke
         c.layout = :border
       end
 
+      def self.server_class_config_options
+        [*super, :container_config, :collection_config]
+      end
+
       def configure(c)
+        c.items = [:container, :collection]
         super
-        c.items ||= [:container, :collection]
       end
 
       endpoint :select_container_record do |params, this|
