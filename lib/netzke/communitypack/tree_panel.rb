@@ -1,9 +1,9 @@
 # Ext.tree.TreePanel-based component
-# 
+#
 # TODO: Add documentation for usage
 class Netzke::Communitypack::TreePanel < Netzke::Base
-      
-  
+
+
   # Include data accessor module
   include ::Netzke::Basepack::DataAccessor
   # Include columns module
@@ -20,7 +20,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
     :rows_per_page => 30,
     :treecolumn => 'tree' # The default name of the column, that will be the treecolumn
   }
-  
+
   js_configure do |c|
     c.extend = "Ext.tree.TreePanel"
     c.mixin :tree_panel
@@ -86,7 +86,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
   endpoint :get_data do |params, this|
     this.merge! get_data(params)
   end
-  
+
   # Method that is called by the get_data endpoint
   # Calls the get_children method and returns the serialized records
   #
@@ -108,7 +108,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
       { :netzke_feedback => @flash }
     end
   end
-  
+
   # Serializes an array of objects
   #
   # @param [Array] records
@@ -121,14 +121,14 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
           name = f[:name].underscore.to_sym
           h[name] = send("#{name}#{f[:type] == 'boolean' ? '?' : ''}", r)
         end
-         
+
         inline_children = get_inline_children(r)
         h[:data] = serialize_data(inline_children) unless inline_children.nil?
         h
       }
     }
   end
-  
+
   # Retrieves all children for a node
   # Note: It's recommended to override this method
   #
@@ -172,7 +172,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
       data_adapter.count_records(params, final_columns)
     end
   end
-  
+
   # Should return all children of the record that should also be serialized in the current request
   # Note: It's recommended to override this method
   #
@@ -182,7 +182,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
   def get_inline_children(r)
     nil
   end
-  
+
   # Is the record a leaf or not?
   # Note: It's recommended to override this method
   #
@@ -191,7 +191,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
   def leaf?(r)
     r.children.empty?
   end
-  
+
   # Is the record a expanded or not?
   # Note: It's recommended to override this method
   #
