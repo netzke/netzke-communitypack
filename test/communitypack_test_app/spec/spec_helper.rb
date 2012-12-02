@@ -13,7 +13,7 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
-  
+
   require 'capybara/rspec'
   require 'capybara/rails'
 
@@ -26,7 +26,7 @@ Spork.prefork do
 
     # Include Ext JS helpers
     config.include Extjs
-    
+
     # ## Mock Framework
     #
     # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

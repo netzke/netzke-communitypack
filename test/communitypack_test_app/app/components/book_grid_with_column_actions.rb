@@ -1,4 +1,4 @@
-class BookGridWithColumnActions < Netzke::Basepack::GridPanel
+class BookGridWithColumnActions < Netzke::Basepack::Grid
   include Netzke::Communitypack::ActionColumn
 
   def configure(c)

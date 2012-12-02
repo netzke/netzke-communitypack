@@ -5,7 +5,7 @@ module Netzke
 
       included do |base|
         js_configure do |c|
-          c.include :action_column
+          c.require :action_column
         end
       end
 

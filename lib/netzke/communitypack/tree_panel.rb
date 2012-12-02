@@ -7,7 +7,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
   # Include data accessor module
   include ::Netzke::Basepack::DataAccessor
   # Include columns module
-  include ::Netzke::Basepack::GridPanel::Columns
+  include ::Netzke::Basepack::Columns
 
   extend ActiveSupport::Memoizable
 
@@ -24,7 +24,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
   js_configure do |c|
     c.extend = "Ext.tree.TreePanel"
     c.mixin :tree_panel
-    c.include :paging_tree_store
+    c.require :paging_tree_store
   end
 
   # Configure dynamic JS properties for instantiation

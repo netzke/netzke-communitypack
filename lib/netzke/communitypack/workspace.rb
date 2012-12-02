@@ -1,9 +1,9 @@
 module Netzke
   module Communitypack
     # A component that allows for dynamical loading/unloading of other Netzke components in tabs.
-    # It can be manipulated by calling the <js>loadChild</js> method, e.g.:
+    # It can be manipulated by calling the +loadInTab+ method, e.g.:
     #
-    #   workspace.loadChild("UserGrid", {newTab: true})
+    #   workspace.loadInTab("UserGrid", {newTab: true})
     #
     # - will load a UserGrid component from the server in a new tab.
     #
@@ -15,36 +15,58 @@ module Netzke
     class Workspace < Netzke::Base
       js_configure do |c|
         c.extend = "Ext.tab.Panel"
-        c.prevent_header = true
+        c.header = false
         c.mixin
       end
 
       action :remove_all
 
       def configure(c)
-        c.items = ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
-          {
-            :layout => 'fit',
-            :title => tab[:title],
-            :closable => i > 0, # all closable except first
-            :netzke_component_id => tab[:name],
-            :items => !components[tab[:name].to_sym][:lazy_loading] && [tab[:name].to_sym]
-          }
-        end
+        c.items = [:dashboard, *stored_tabs.map{|c| c[:component] = c[:name].to_sym}]
+        # c.items = ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
+        #   {
+        #     :layout => 'fit',
+        #     :title => tab[:title],
+        #     :closable => i > 0, # all closable except first
+        #     :netzke_component_id => tab[:name],
+        #     :items => components[tab[:name].to_sym][:eager_loading] && [tab[:name].to_sym]
+        #   }
+        # end
 
         super
       end
 
-      def dashboard_config
-        {
-          :title => "Dashboard",
-          klass: Netzke::Basepack::Panel
-        }.merge!(@passed_config[:dashboard_config] || {}).merge(:name => 'cmp0', :lazy_loading => false)
+      def extend_item(item)
+        item = super
+        i = get_item_index
+        c = component_instance(item[:netzke_component])
+        { layout: :fit,
+          title: c.config.title,
+          closable: i > 0,
+          netzke_component_id: :"cmp#{i}",
+          items: i == 0 ? [item] : []
+        }
+      end
+
+      def get_item_index
+        @item_index ||= -1
+        @item_index += 1
+      end
+
+      component :dashboard do |c|
+        c.title = "Dashboard"
+        c.klass = Netzke::Core::Panel
+        c.header = false
+        c.border = false
+        c.html = "Dashboard"
+        # c.component_id = :cmp0
+        # c.item_id = :cmp0
+        # c.eager_loading = true
       end
 
       # Overriding this to allow for dynamically declared components
       def components
-        stored_tabs.inject({}){ |r,tab| r.merge(tab[:name].to_sym => tab.reverse_merge(:prevent_header => true, :lazy_loading => true, :border => false)) }.merge(:cmp0 => dashboard_config)
+        super.merge(stored_tabs.inject({}){ |r,tab| r.merge(tab[:name].to_sym => tab.reverse_merge(:header => false, :border => false)) })
       end
 
       # Overriding the deliver_component endpoint, to dynamically add tabs and replace components in existing tabs
@@ -61,7 +83,8 @@ module Netzke
 
           cmp_config = {:name => params[:name], :klass => cmp_class}.merge(params[:config] || {}).symbolize_keys
           cmp_instance = cmp_class.new(cmp_config, self)
-          new_tab_short_config = cmp_config.merge(:title => cmp_instance.js_config[:title] || cmp_instance.class.js_properties[:title]) # here we set the title
+          ::Rails.logger.debug "!!! cmp_instance.config:: #{cmp_instance.config.inspect}\n"
+          new_tab_short_config = cmp_config.merge(:title => cmp_instance.config.title || cmp_instance.class.js_config.title) # here we set the title
 
           if stored_tabs.empty? || cmp_index > stored_tabs.last[:name].sub("cmp", "").to_i
             # add new tab to persistent storage
@@ -71,30 +94,27 @@ module Netzke
             current_tabs[current_tabs.index(current_tabs.detect{ |tab| tab[:name] == cmp_name })] = new_tab_short_config
           end
 
-          component_session[:items] = current_tabs
-          @stored_tabs = nil # reset cache
+          update_state(:items, current_tabs)
+          @stored_tabs = nil # invalidate cache
         end
 
         super(params, this)
       end
 
       # Clean the session on request. More clean-up may be needed later, as we start using persistent configuration.
-      endpoint :server_remove_all do |params|
-        component_session[:items] = []
+      endpoint :server_remove_all do |params, this|
+        state[:items] = []
       end
 
       # Removes a closed tab's component from the storage.
-      endpoint :server_remove_tab do |params|
-        component_session[:items].delete_if{ |item| item[:name] == params[:name] }
-        {}
+      endpoint :server_remove_tab do |params, this|
+        state[:items].delete_if{ |item| item[:name] == params[:name] }
       end
 
-      private
-
-        # We store these in component_session atm. May as well be in persistent storage, depending on the requirements
-        def stored_tabs
-          @stored_tabs ||= component_session[:items] || []
-        end
+      # We store these in component_session atm. May as well be in persistent storage, depending on the requirements
+      def stored_tabs
+        @stored_tabs ||= state[:items] || []
+      end
 
     end
   end

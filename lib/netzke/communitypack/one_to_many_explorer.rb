@@ -15,7 +15,7 @@ module Netzke
     #       super c
     #     end
     class OneToManyExplorer < Netzke::Base
-      include Netzke::Basepack::ItemsPersistence
+      include Netzke::Basepack::ItemPersistence
 
       js_configure do |c|
         c.mixin
@@ -39,7 +39,7 @@ module Netzke
       end
 
       component :container do |c|
-        c.klass ||= Netzke::Basepack::GridPanel
+        c.klass ||= Netzke::Basepack::Grid
         c.title ||= "Container"
         c.region ||= :west
         c.width ||= 300
@@ -47,7 +47,7 @@ module Netzke
       end
 
       component :collection do |c|
-        c.klass ||= Netzke::Basepack::GridPanel
+        c.klass ||= Netzke::Basepack::Grid
 
         c.region ||= :center
         c.load_inline_data = false

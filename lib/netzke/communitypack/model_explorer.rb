@@ -7,7 +7,7 @@ module Netzke
     # * :grid_config (optional) - a config hash passed to the grid
     # * :form_config (optional) - a config hash passed to the form
     class ModelExplorer < Netzke::Base
-      include Netzke::Basepack::ItemsPersistence
+      include Netzke::Basepack::ItemPersistence
 
       js_configure do |c|
         c.prevent_header = true
@@ -39,7 +39,7 @@ module Netzke
         passed_config[:width] ||= 300 if [:west, :east].include?(passed_config[:region])
         passed_config[:width] ||= 150 if [:north, :south].include?(passed_config[:region])
 
-        c.klass = Netzke::Basepack::GridPanel
+        c.klass = Netzke::Basepack::Grid
         c.split = true
         c.model = config.model
 
@@ -47,7 +47,7 @@ module Netzke
       end
 
       component :form do |c|
-        c.klass = Netzke::Basepack::FormPanel
+        c.klass = Netzke::Basepack::Form
         c.model = config.model
         c.region = :center
         c.merge!(config.form_config || {})

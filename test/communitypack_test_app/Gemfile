@@ -19,8 +19,10 @@ when 'sq'
 end
 
 # Get the latest sources from github
-gem 'netzke-core',          :github => 'nomadcoder/netzke-core',     :branch => '0-8'
-gem 'netzke-basepack',      :github => 'nomadcoder/netzke-basepack', :branch => '0-8'
+gem 'netzke-core',          :github => 'nomadcoder/netzke-core'
+gem 'netzke-basepack',      :github => 'nomadcoder/netzke-basepack'
+# gem 'netzke-core', path: "~/code/netzke/netzke-core"
+# gem 'netzke-basepack', path: "~/code/netzke/netzke-basepack"
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -28,7 +30,7 @@ gem 'netzke-basepack',      :github => 'nomadcoder/netzke-basepack', :branch => 
 group :development, :test do
   gem 'pry'
   gem 'thin'
-  gem 'capybara'
+  gem 'capybara', '~>1'
   gem 'capybara-screenshot'
   gem 'selenium-webdriver'
   gem 'rspec-rails'
