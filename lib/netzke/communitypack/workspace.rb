@@ -1,13 +1,20 @@
 module Netzke
   module Communitypack
     # A component that allows for dynamical loading/unloading of other Netzke components in tabs.
+    # Warning: This component may be not secure enough, as it allows loading any Netzke component at the request from the client (component class has been sent as a paremeter for the deliver_component endpoint). A more secure implementation would white-list the components to be loaded.
+    #
     # It can be manipulated by calling the +loadInTab+ method, e.g.:
     #
     #   workspace.loadInTab("UserGrid", {newTab: true})
     #
     # - will load a UserGrid component from the server in a new tab.
     #
-    # ## Configuration
+    # == Client-side methods:
+    #
+    # +loadInTab+ - loads a component in a tab
+    # +closeAllTabs+ - closes all open tabs
+    #
+    # == Configuration
     #
     # Accepts the following options:
     #
@@ -23,16 +30,6 @@ module Netzke
 
       def configure(c)
         c.items = [:dashboard, *stored_tabs.map{|c| c[:component] = c[:name].to_sym}]
-        # c.items = ([dashboard_config] + stored_tabs).each_with_index.map do |tab,i|
-        #   {
-        #     :layout => 'fit',
-        #     :title => tab[:title],
-        #     :closable => i > 0, # all closable except first
-        #     :netzke_component_id => tab[:name],
-        #     :items => components[tab[:name].to_sym][:eager_loading] && [tab[:name].to_sym]
-        #   }
-        # end
-
         super
       end
 
@@ -59,9 +56,6 @@ module Netzke
         c.header = false
         c.border = false
         c.html = "Dashboard"
-        # c.component_id = :cmp0
-        # c.item_id = :cmp0
-        # c.eager_loading = true
       end
 
       # Overriding this to allow for dynamically declared components
@@ -83,7 +77,6 @@ module Netzke
 
           cmp_config = {:name => params[:name], :klass => cmp_class}.merge(params[:config] || {}).symbolize_keys
           cmp_instance = cmp_class.new(cmp_config, self)
-          ::Rails.logger.debug "!!! cmp_instance.config:: #{cmp_instance.config.inspect}\n"
           new_tab_short_config = cmp_config.merge(:title => cmp_instance.config.title || cmp_instance.class.js_config.title) # here we set the title
 
           if stored_tabs.empty? || cmp_index > stored_tabs.last[:name].sub("cmp", "").to_i
