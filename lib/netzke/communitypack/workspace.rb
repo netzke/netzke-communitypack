@@ -94,7 +94,7 @@ module Netzke
             current_tabs[current_tabs.index(current_tabs.detect{ |tab| tab[:name] == cmp_name })] = new_tab_short_config
           end
 
-          update_state(:items, current_tabs)
+          state[:items] = current_tabs
           @stored_tabs = nil # invalidate cache
         end
 
