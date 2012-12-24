@@ -6,13 +6,13 @@ A bunch of community-written Netzke components.
 
 ## Included components
 
-The following components are included:
+The following components are included (the ones marked FIXME! are probably not working with the latest Netzke, and are waiting for a fix):
 
 * [LiveSearchGrid](http://rdoc.info/github/netzke/netzke-communitypack/Netzke/Communitypack/LiveSearchGrid) - a grid with configurable live search
 * [Workspace](http://rdoc.info/github/netzke/netzke-communitypack/Netzke/Communitypack/Workspace) - a TabPanel-based component that allows dynamically load arbitrary Netzke components from server; for a demo see http://yanit.heroku.com
-* [TreePanel](http://rdoc.info/github/netzke/netzke-communitypack/Netzke/Communitypack/TreePanel) - a grid with configurable live search
 * [ModelExplorer](http://rdoc.info/github/netzke/netzke-communitypack/Netzke/Communitypack/ModelExplorer) - a grid and a form layed-out next to each other, bound to an ActiveRecord model; for a demo see http://yanit.heroku.com
 * [OneToManyExplorer](http://rdoc.info/github/netzke/netzke-communitypack/Netzke/Communitypack/OneToManyExplorer) - 2 grids for editing ActiveRecord models that are connected with one-to-many relationship; for a demo see http://yanit.heroku.com
+* [TreePanel](http://rdoc.info/github/netzke/netzke-communitypack/Netzke/Communitypack/TreePanel) (FIXME!) - a grid with configurable live search
 
 ## Functionality
 
