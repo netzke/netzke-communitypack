@@ -1,3 +1,0 @@
-= Netzke Communitypack
-
-A bunch of community-written Netzke components.

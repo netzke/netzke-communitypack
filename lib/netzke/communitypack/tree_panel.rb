@@ -3,7 +3,6 @@
 # TODO: Add documentation for usage
 class Netzke::Communitypack::TreePanel < Netzke::Base
 
-
   # Include data accessor module
   include ::Netzke::Basepack::DataAccessor
   # Include columns module
