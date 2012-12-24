@@ -11,7 +11,12 @@ module Netzke
     #
     # == Client-side methods:
     #
-    # +loadInTab+ - loads a component in a tab
+    # +loadInTab(componentClassName, options)+ - loads a component in a tab.
+    #
+    #   * +options+ is an object that may contain the following keys:
+    #       * +newTab+ (boolean) - whether to load a component in a newly created tab (+true+), or in the active tab (+false+, default)
+    #       * +config+ (object) - config for the loaded Netzke component
+    #
     # +closeAllTabs+ - closes all open tabs
     #
     # == Configuration
