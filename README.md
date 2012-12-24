@@ -19,3 +19,8 @@ The following components are included:
 Besides components, the following modules are included that can be used for extending existing components.
 
 * [ActionColumn](http://rdoc.info/github/netzke/netzke-communitypack/Netzke/Communitypack/ActionColumn) - allows easily adding action column to `Basepack::Grid`; for a demo see http://yanit.heroku.com
+
+---
+Copyright (c) 2008-2012 [nomadcoder](https://twitter.com/nomadcoder), released under the MIT license (see LICENSE).
+
+**Note** that Ext JS is licensed [differently](http://www.sencha.com/products/extjs/license/), and you may need to purchase a commercial license in order to use it in your projects!
