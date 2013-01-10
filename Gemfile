@@ -14,5 +14,5 @@ gemspec
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 # Get the latest sources from github
-gem 'netzke-core',     :github => 'nomadcoder/netzke-core'
-gem 'netzke-basepack', :github => 'nomadcoder/netzke-basepack'
+gem 'netzke-core',     :github => 'netzke/netzke-core'
+gem 'netzke-basepack', :github => 'netzke/netzke-basepack'
