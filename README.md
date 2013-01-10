@@ -8,11 +8,11 @@ A bunch of community-written Netzke components.
 
 This gem will be decomposed and deprecated, with some parts being moved over to Basepack, others - to dedicated gems:
 
-[x] Move ActionColumn to Basepack as of v0.8.2
-[ ] Extract Workspace to a gem
-[ ] Extract TreePanel to a gem
-[ ] Extract ModelExplorer and OneToManyExplorer to a gem
-[ ] Move LiveSearchGrid to netzke-demo
+- [x] Move ActionColumn to Basepack as of v0.8.2
+- [ ] Move Workspace to Basepack
+- [ ] Extract TreePanel to a gem
+- [ ] Extract ModelExplorer and OneToManyExplorer to a gem
+- [ ] Move LiveSearchGrid to netzke-demo
 
 ## Included components
 
