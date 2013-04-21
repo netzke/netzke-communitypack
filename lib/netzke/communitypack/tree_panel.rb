@@ -48,15 +48,13 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
     c.extra_fields << {:name => 'expanded', :type => 'boolean'} # This will call expanded?(r) for every record
     # only if the node id property is different from the data class' primary key, we need to add and extra field
     c.extra_fields << {:name => c.pri.to_s.camelize(:lower), :type => 'string'} if c.pri != data_class.primary_key
+    # we can not operate with inline data for now, so we just prohibit to use it
+    c.load_inline_data = false
   end
 
   # Sets the xtype to 'treecolumn' for the column with name equal to the :treecolumn value of the config
   def set_default_xtype(c)
-    if c[:name] == config[:treecolumn].to_s
-      c[:xtype] = 'treecolumn'
-    else
-      super
-    end
+    c[:xtype] = 'treecolumn' if c[:name].to_s == config[:treecolumn].to_s
   end
 
   # Set data_index
@@ -71,6 +69,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
   def augment_column_config(c)
     super
     set_default_data_index(c)
+    set_default_xtype c
   end
 
   # @!method get_data_endpoint
@@ -114,7 +113,7 @@ class Netzke::Communitypack::TreePanel < Netzke::Base
   # @return [Array] the serialized data
   def serialize_data(records)
     records.map { |r|
-      r.netzke_hash(final_columns(:with_meta => true)).tap { |h|
+      data_adapter.record_to_hash(r, final_columns(:with_meta => true)).tap { |h|
 
         config[:extra_fields].each do |f|
           name = f[:name].underscore.to_sym
